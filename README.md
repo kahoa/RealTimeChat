@@ -24,6 +24,8 @@
 - **Backend:** Express.js, Socket.io
 - **Datenbank:** SQLite
 - **Cloud:** AWS
+- **CI/CD:** Github Actions
+- **Infrastructure as Code:** Terraform, Ansible
 
 ---
 
