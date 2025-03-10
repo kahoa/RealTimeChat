@@ -1,5 +1,6 @@
 provider "aws" {
   region = "eu-central-1"
+  profile = "default"
 }
 resource "aws_instance" "example" {
   ami           = "ami-0b74f796d330ab49c"
