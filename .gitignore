@@ -233,3 +233,6 @@ tags
 
 # This file is created during the Terraform step and contains the private key file for the EC2 instance
 infrastructure/Terraform/terraform-key.pem
+
+# Temp Terraform file that was not included in the gitignore generator
+infrastructure/Terraform/.terraform.lock.hcl

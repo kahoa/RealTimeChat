@@ -1,0 +1,26 @@
+- name: Configure Web Server (NGINX) on EC2
+  hosts: webserver # This refers to the group defined in your inventory
+  gather_facts: yes # This will gather facts about the remote EC2 instance
+  become: yes # This installation needs root permissions
+  vars_files:
+    - terraform_outputs.json
+  tasks:
+    - name: Install NGINX
+      ansible.builtin.dnf:
+        name: nginx
+        state: present
+        update_cache: yes
+    - name: Start the NGINX service
+      ansible.builtin.service:
+        name: nginx
+        state: started
+    - name: Ensure NGINX is running on boot
+      ansible.builtin.service:
+        name: nginx
+        enabled: yes
+    - name: Print EC2 public DNS
+      debug:
+        msg: "The EC2 instance public DNS is {{ ec2_public_dns.value }}"
+    - name: Print EC2 public IP
+      debug:
+        msg: "The EC2 instance public IP is {{ ec2_public_ip.value }}"
