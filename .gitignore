@@ -1,5 +1,23 @@
-# Created by https://www.toptal.com/developers/gitignore/api/terraform,vim,node,react
-# Edit at https://www.toptal.com/developers/gitignore?templates=terraform,vim,node,react
+# Created by https://www.toptal.com/developers/gitignore/api/ansible,terraform,vim,git,node,react
+# Edit at https://www.toptal.com/developers/gitignore?templates=ansible,terraform,vim,git,node,react
+
+### Ansible ###
+*.retry
+
+### Git ###
+# Created by git for backups. To disable backups in Git:
+# $ git config --global mergetool.keepBackup false
+*.orig
+
+# Created by git when using merge tools for conflicts
+*.BACKUP.*
+*.BASE.*
+*.LOCAL.*
+*.REMOTE.*
+*_BACKUP_*.txt
+*_BASE_*.txt
+*_LOCAL_*.txt
+*_REMOTE_*.txt
 
 ### Node ###
 # Logs
@@ -211,7 +229,7 @@ tags
 # Persistent undo
 [._]*.un~
 
-# End of https://www.toptal.com/developers/gitignore/api/terraform,vim,node,react
+# End of https://www.toptal.com/developers/gitignore/api/ansible,terraform,vim,git,node,react
 
 # This file is created during the Terraform step and contains the private key file for the EC2 instance
 infrastructure/Terraform/terraform-key.pem
