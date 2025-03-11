@@ -26,6 +26,29 @@ resource "aws_security_group" "allow_ssh" {
   }
 }
 
+resource "aws_security_group" "allow_http" {
+  name        = "allow_http"
+  description = "Allow inbound HTTP traffic"
+
+  ingress {
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"] # Allow HTTP from any IP address
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"] # Allow outbound traffic to anywhere
+  }
+
+  tags = {
+    Name = "AllowHTTP"
+  }
+}
+
 # Create a SSH key pair
 resource "tls_private_key" "example" {
   algorithm = "RSA"
@@ -48,7 +71,7 @@ resource "aws_instance" "example" {
   ami           = "ami-0b74f796d330ab49c"
   instance_type = "t2.micro"
 
-  security_groups = [aws_security_group.allow_ssh.name] # Attach the security group
+  security_groups = [aws_security_group.allow_ssh.name, aws_security_group.allow_http.name] # Attach the security groups
 
   key_name = aws_key_pair.generated_key.key_name # Attach the SSH key pair
 
