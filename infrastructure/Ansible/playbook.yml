@@ -24,3 +24,126 @@
     - name: Print EC2 public IP
       debug:
         msg: "The EC2 instance public IP is {{ ec2_public_ip.value }}"
+    - name: Install required packages
+      ansible.builtin.dnf:
+        name:
+          - git
+          - nodejs
+          - npm
+        state: present
+        update_cache: yes
+    - name: Configure Nginx for frontend and backend
+      ansible.builtin.copy:
+        dest: "/etc/nginx/conf.d/chat_app.conf"
+        content: |
+          server { 
+              listen 80;
+              server_name _;
+
+              location / {
+                   proxy_pass http://localhost:5173; 
+                   proxy_http_version 1.1;
+                   proxy_set_header Upgrade $http_upgrade;
+                   proxy_set_header Connection 'upgrade';
+                   proxy_set_header Host $host;
+                   proxy_cache_bypass $http_upgrade;
+              }
+          }
+      notify:
+        - restart nginx
+  handlers:
+  - name: restart nginx
+    ansible.builtin.systemd:
+      name: nginx
+      state: restarted
+
+- name: Run the application
+  hosts: webserver # This refers to the group defined in your inventory
+  gather_facts: no # This will gather facts about the remote EC2 instance
+  tasks:
+    - name: Clone repository
+      git:
+        repo: "https://github.com/kahoa/RealTimeChat.git"
+        dest: "/home/ec2-user/RealTimeChat"
+        update: yes
+        force: yes
+    - name: Create install script
+      copy:
+        dest: "/home/ec2-user/install_chat_app.sh"
+        mode: "0755"
+        content: |
+          #!/usr/bin/bash
+          cd /home/ec2-user/RealTimeChat/backend
+          npm install
+
+          cd database
+          npm install
+
+          cd ../../frontend
+          npm install
+    - name: Make install script executable
+      file:
+        path: "/home/ec2-user/install_chat_app.sh"
+        mode: "0755"
+    - name: Execute install script
+      command: "/home/ec2-user/install_chat_app.sh"
+- name: Setup systemd services for RealTimeChat
+  hosts: webserver # This refers to the group defined in your inventory
+  gather_facts: no # This will gather facts about the remote EC2 instance
+  become: yes
+  tasks:
+    - name: Create backend systemd service
+      copy:
+        dest: /etc/systemd/system/realtimechat-backend.service
+        content: |
+          [Unit]
+          Description=RealTimeChat Backend Service
+          After=network.target
+
+          [Service]
+          ExecStart=/usr/bin/node server.js
+          WorkingDirectory=/home/ec2-user/RealTimeChat/backend
+          Restart=always
+          User=ec2-user
+          Environment=NODE_ENV=production
+          
+          [Install]
+          WantedBy=multi-user.target
+      notify: Reload systemd
+    - name: Create frontend systemd service
+      copy:
+        dest: /etc/systemd/system/realtimechat-frontend.service
+        content: |
+          [Unit]
+          Description=RealTimeChat Frontend Service
+          After=network.target
+
+          [Service]
+          ExecStart=/usr/bin/npm run dev
+          WorkingDirectory=/home/ec2-user/RealTimeChat/frontend
+          Restart=always
+          User=ec2-user
+          Environment=NODE_ENV=development
+
+          [Install]
+          WantedBy=multi-user.target
+      notify: Reload systemd
+  handlers:
+    - name: Reload systemd
+      command: systemctl daemon-reload
+    - name: Start the backend service
+      ansible.builtin.service:
+        name: realtimechat-backend
+        state: started
+    - name: Ensure backend is running on boot
+      ansible.builtin.service:
+        name: realtimechat-backend
+        enabled: yes
+    - name: Start the frontend service
+      ansible.builtin.service:
+        name: realtimechat-frontend
+        state: started
+    - name: Ensure frontend is running on boot
+      ansible.builtin.service:
+        name: realtimechat-frontend
+        enabled: yes
