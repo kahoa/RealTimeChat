@@ -72,6 +72,6 @@ app.get("/chat", async (req, res) => {
   }
 });
 
-server.listen(port, () => {
-  console.log(`Server läuft auf http://localhost:${port}`);
+server.listen(port, "0.0.0.0", () => {
+  console.log(`Server läuft auf http://0.0.0.0:${port}`);
 });
