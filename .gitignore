@@ -238,5 +238,6 @@ infrastructure/Terraform/terraform-key.pem
 infrastructure/Terraform/.terraform.lock.hcl
 
 # Auto generated files
+Ansible/inventory.ini
 Ansible/terraform_outputs.json
 Terraform/terraform_outputs.json
