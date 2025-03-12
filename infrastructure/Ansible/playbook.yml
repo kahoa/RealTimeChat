@@ -128,9 +128,6 @@
           [Install]
           WantedBy=multi-user.target
       notify: Reload systemd
-  handlers:
-    - name: Reload systemd
-      command: systemctl daemon-reload
     - name: Start the backend service
       ansible.builtin.service:
         name: realtimechat-backend
@@ -147,3 +144,6 @@
       ansible.builtin.service:
         name: realtimechat-frontend
         enabled: yes
+  handlers:
+    - name: Reload systemd
+      command: systemctl daemon-reload
