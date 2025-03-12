@@ -236,3 +236,7 @@ infrastructure/Terraform/terraform-key.pem
 
 # Temp Terraform file that was not included in the gitignore generator
 infrastructure/Terraform/.terraform.lock.hcl
+
+# Auto generated files
+Ansible/terraform_outputs.json
+Terraform/terraform_outputs.json
