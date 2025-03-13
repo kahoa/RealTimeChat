@@ -2,6 +2,11 @@ import React, { useContext, useEffect, useState } from "react";
 import { ColorContext } from "./ColorSwitcher";
 import { useSocket } from "./SocketProvider";
 
+// Get WebSocket server URL from Vite's environment variable
+const WS_SERVER = import.meta.env.VITE_WS_SERVER
+  ? `http://${import.meta.env.VITE_WS_SERVER}:8080`
+  : "http://localhost:8080"; // Default value for local development
+
 function ChatHistory({ username }) {
   const { darkMode } = useContext(ColorContext);
   const [messages, setMessages] = useState([]);
@@ -13,7 +18,7 @@ function ChatHistory({ username }) {
     // Fetch messages from database via /chat GET request and add to state
     async function getChatMessages() {
       try {
-        const response = await fetch("http://18.194.62.73:3000/chat");
+        const response = await fetch(`${WS_SERVER}/chat`);
         const data = await response.json();
         console.log(data);
         // Convert messages into proper format (id, isUser, text, user, timestamp)
