@@ -9,4 +9,4 @@ echo "$(jq -r .ec2_public_dns.value < terraform_outputs.json) ansible_user=ec2-u
 echo 'Extracting EC2 Public DNS and saving to .env'
 echo "VITE_WS_SERVER=$(jq -r .ec2_public_dns.value < terraform_outputs.json)" > ../../frontend/.env
 
-echo 'Done! The WebSocket server IP is now set in frontend/.env'
+echo 'Done! The WebSocket server DNS is now set in frontend/.env'
