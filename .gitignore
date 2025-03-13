@@ -241,3 +241,4 @@ infrastructure/Terraform/.terraform.lock.hcl
 Ansible/inventory.ini
 Ansible/terraform_outputs.json
 Terraform/terraform_outputs.json
+frontend/.env

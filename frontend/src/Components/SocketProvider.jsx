@@ -13,6 +13,11 @@ const SocketContext = createContext();
 // Custom-Hook für Zugriff auf Socket-Verbindung
 export const useSocket = () => useContext(SocketContext);
 
+// Get WebSocket server URL from Vite's environment variable
+const WS_SERVER = import.meta.env.VITE_WS_SERVER
+  ? `http://${import.meta.env.VITE_WS_SERVER}:3000`
+  : "http://localhost:3000"; // Default value for local development
+
 // initialisieren einer einzelnen beständigen Verbindung
 // und speichern im SocketContext
 export const SocketProvider = ({ children, username }) => {
@@ -20,7 +25,7 @@ export const SocketProvider = ({ children, username }) => {
   const socketRef = useRef(null);
 
   useEffect(() => {
-    socketRef.current = io("http://18.194.62.73:3000");
+    socketRef.current = io(WS_SERVER);
 
     // Verbindung herstellen und im Custom-Hook speichern
     socketRef.current.on("connect", () => {
