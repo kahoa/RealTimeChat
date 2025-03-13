@@ -25,9 +25,7 @@ export const SocketProvider = ({ children, username }) => {
   const socketRef = useRef(null);
 
   useEffect(() => {
-    socketRef.current = io(WS_SERVER, {
-        withCredintials: true, //for CORS
-    });
+    socketRef.current = io(WS_SERVER);
 
     // Verbindung herstellen und im Custom-Hook speichern
     socketRef.current.on("connect", () => {
