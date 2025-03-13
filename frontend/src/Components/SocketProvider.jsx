@@ -15,8 +15,8 @@ export const useSocket = () => useContext(SocketContext);
 
 // Get WebSocket server URL from Vite's environment variable
 const WS_SERVER = import.meta.env.VITE_WS_SERVER
-  ? `http://${import.meta.env.VITE_WS_SERVER}:3000`
-  : "http://localhost:3000"; // Default value for local development
+  ? `http://${import.meta.env.VITE_WS_SERVER}:8080`
+  : "http://localhost:8080"; // Default value for local development
 
 // initialisieren einer einzelnen beständigen Verbindung
 // und speichern im SocketContext

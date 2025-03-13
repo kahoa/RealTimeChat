@@ -6,7 +6,7 @@ import { addChatMessage, getChatMessages, } from "./database/database.js";
 
 const app = express();
 const server = createServer(app);
-const port = 3000;
+const port = 8080;
 
 app.use(cors());
 app.use(express.json());
