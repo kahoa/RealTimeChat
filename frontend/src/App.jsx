@@ -8,12 +8,12 @@ import {
   ColorContext,
 } from "./Components/ColorSwitcher";
 import "./App.css";
-import { useContext,useEffect, useRef, useState } from "react";
+import { useContext, useState } from "react";
 import { SocketProvider } from "./Components/SocketProvider";
 import Login from "./Components/Login";
 import LogOff from "./Components/LogOff";
 import logo from "./Components/kaiwa-Logo.png"
-
+import PropTypes from 'prop-types';
 function App() {
   const [username, setUsername] = useState("");
 
@@ -32,6 +32,11 @@ function App() {
 const MainComponent = ({ username, setUsername }) => {
   const { darkMode } = useContext(ColorContext);
 
+MainComponent.propTypes = {
+    username: PropTypes.string.isRequired,
+    setUsername: PropTypes.func.isRequired,
+  };
+  
   return (
     <div
       className={`container-fluid d-flex flex-column vh-100 ${
