@@ -42,7 +42,7 @@ export const SocketProvider = ({ children, username }) => {
     return () => {
       socketRef.current.disconnect();
     };
-  }, []);
+  }, [username]);
 
   return (
     <SocketContext.Provider value={socket}>{children}</SocketContext.Provider>
