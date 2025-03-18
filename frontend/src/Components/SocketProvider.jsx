@@ -1,17 +1,6 @@
-import React, {
-  createContext,
-  useContext,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import React, { useEffect, useRef, useState } from "react";
 import io from "socket.io-client";
-
-// "Container" für die Socket-Verbindung
-const SocketContext = createContext();
-
-// Custom-Hook für Zugriff auf Socket-Verbindung
-export const useSocket = () => useContext(SocketContext);
+import { SocketContext } from "./SocketContext";
 
 // Get WebSocket server URL from Vite's environment variable
 const WS_SERVER = import.meta.env.VITE_WS_SERVER
@@ -35,7 +24,7 @@ export const SocketProvider = ({ children, username }) => {
       socketRef.current.emit("set_username", username);
     });
     // Fehlerbehandlung
-    socketRef.current.on("conection_error", (err) => {
+    socketRef.current.on("connection_error", (err) => {
       console.error(`Verbindungsfehler: ${err.message}`);
     });
     // trennen der Verbindung wenn Komponente "unmounted" wird
@@ -48,3 +37,5 @@ export const SocketProvider = ({ children, username }) => {
     <SocketContext.Provider value={socket}>{children}</SocketContext.Provider>
   );
 };
+
+export default SocketProvider;
