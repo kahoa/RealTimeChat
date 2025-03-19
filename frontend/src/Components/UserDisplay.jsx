@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from "react";
 import { ColorContext } from "./ColorSwitcher";
-import { useSocket } from "./SocketProvider";
+import { useSocket } from "./SocketContext";
 
 function UserDisplay() {
   const { darkMode } = useContext(ColorContext);

@@ -1,5 +1,5 @@
 import React from "react";
-import { useSocket } from "./SocketProvider";
+import { useSocket } from "./SocketContext";
 import CustomButton from "./CustomButton";
 
 // Websocket Verbindung trennen und und Benutzername aus State löschen
