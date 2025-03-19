@@ -51,7 +51,7 @@ function ChatHistory({ username }) {
         socket.off("receive_message");
       }
     };
-  }, [socket]);
+  }, [socket, username]);
 
   useEffect(() => {
     const lastMessageElement = document.querySelector(".last-message");
