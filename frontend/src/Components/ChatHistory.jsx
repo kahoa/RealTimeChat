@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { ColorContext } from "./ColorSwitcher";
-import { useSocket } from "./SocketProvider";
+import { useSocket } from "./SocketContext";
 
 // Get WebSocket server URL from Vite's environment variable
 const WS_SERVER = import.meta.env.VITE_WS_SERVER
