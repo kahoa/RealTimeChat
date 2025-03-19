@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from "react";
+import PropTypes from "prop-types"
 import AnimatedHeader from "./AnimatedHeader";
 import CustomButton from "./CustomButton";
 
@@ -66,4 +67,8 @@ function Login({ onLogin }) {
   );
 }
 
+Login.propTypes = {
+    onLogin: PropTypes.func.isRequired, // onLogin must be a function and is required
+  };
+  
 export default Login;

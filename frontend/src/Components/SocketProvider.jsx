@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import PropTypes from "prop-types"
 import io from "socket.io-client";
 import { SocketContext } from "./SocketContext";
 
@@ -37,5 +38,10 @@ export const SocketProvider = ({ children, username }) => {
     <SocketContext.Provider value={socket}>{children}</SocketContext.Provider>
   );
 };
+
+SocketProvider.propTypes = {
+    children: PropTypes.node.isRequired,  // `children` must be a React node
+    username: PropTypes.string.isRequired, // `username` must be a required string
+  };
 
 export default SocketProvider;

@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
+import PropTypes from "prop-types";
 import { ColorContext } from "./ColorSwitcher";
 import { useSocket } from "./SocketContext";
 
@@ -122,5 +123,9 @@ function ChatHistory({ username }) {
     </div>
   );
 }
+
+ChatHistory.propTypes = {
+    username: PropTypes.string.isRequired, // `username` must be a required string
+  };
 
 export default ChatHistory;
