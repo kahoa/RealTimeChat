@@ -1,6 +1,7 @@
 import { ColorContext } from "./ColorSwitcher";
 import { useState, useContext, useRef, useEffect } from "react";
-import { useSocket } from "./SocketProvider";
+import PropTypes from "prop-types"; 
+import { useSocket } from "./SocketContext";
 import "../App.css";
 import CustomButton from "./CustomButton";
 
@@ -30,9 +31,6 @@ function TextInput({ username }) {
       setMessage("");
     }
   }
-
-  // States für Hover- und Active-Zustände
-  const [isHovered] = useState(false);
 
   return (
     <div className="d-flex flex-column align-items-center w-100">
@@ -71,4 +69,9 @@ function TextInput({ username }) {
   );
 }
 
+// PropTypes-Validierung hinzufügen
+TextInput.propTypes = {
+    username: PropTypes.string.isRequired,
+  };
+    
 export default TextInput;
