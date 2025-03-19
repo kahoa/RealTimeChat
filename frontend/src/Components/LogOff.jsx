@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types"; 
 import { useSocket } from "./SocketContext";
 import CustomButton from "./CustomButton";
 
@@ -20,5 +21,9 @@ function LogOff({ setUsername }) {
         </CustomButton>
     );
 }
+
+LogOff.propTypes = {
+    setUsername: PropTypes.func.isRequired,  
+  };
 
 export default LogOff;
