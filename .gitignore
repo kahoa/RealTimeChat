@@ -99,6 +99,7 @@ web_modules/
 .env.test.local
 .env.production.local
 .env.local
+.env
 
 # parcel-bundler cache (https://parceljs.org/)
 .cache
@@ -237,6 +238,6 @@ infrastructure/Terraform/terraform-key.pem
 infrastructure/Terraform/.terraform.lock.hcl
 
 # Auto generated files
-Ansible/inventory.ini
-Ansible/terraform_outputs.json
-Terraform/terraform_outputs.json
+infrastructure/Ansible/inventory.ini
+infrastructure/Ansible/terraform_outputs.json
+infrastructure/Terraform/terraform_outputs.json

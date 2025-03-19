@@ -67,6 +67,10 @@
         dest: "/home/ec2-user/RealTimeChat"
         update: yes
         force: yes
+    - name: Copy environment variables
+      copy:
+        src: ../../frontend/.env
+        dest: /home/ec2-user/RealTimeChat/frontend/.env
     - name: Create install script
       copy:
         dest: "/home/ec2-user/install_chat_app.sh"
