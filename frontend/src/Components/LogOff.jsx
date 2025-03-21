@@ -1,6 +1,3 @@
-/* eslint-disable no-unused-vars */
-import React from "react";
-/* eslint-enable no-unused-vars */
 import PropTypes from "prop-types"; 
 import { useSocket } from "./SocketContext";
 import CustomButton from "./CustomButton";
