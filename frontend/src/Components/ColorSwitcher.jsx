@@ -1,4 +1,5 @@
-import React, { createContext, useContext, useState } from "react";
+import { createContext, useContext, useState } from "react";
+import PropTypes from "prop-types"
 
 const ColorContext = createContext();
 
@@ -15,6 +16,10 @@ export const ColorProvider = ({ children }) => {
     </ColorContext.Provider>
   );
 };
+
+ColorProvider.propTypes = {
+    children: PropTypes.node.isRequired, // Define prop types for `children`
+  };
 
 const ColorSwitcher = () => {
   const { darkMode, toggleColorScheme } = useContext(ColorContext);
