@@ -1,4 +1,6 @@
-import React, { useEffect, useRef, useState } from "react";
+/* eslint-disable no-unused-vars */
+import React, { useEffect, useRef, useState }  from "react";
+/* eslint-enable no-unused-vars */
 import PropTypes from "prop-types"
 import io from "socket.io-client";
 import { SocketContext } from "./SocketContext";
