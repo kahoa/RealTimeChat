@@ -12,8 +12,9 @@ import { useContext, useState } from "react";
 import { SocketProvider } from "./Components/SocketProvider";
 import Login from "./Components/Login";
 import LogOff from "./Components/LogOff";
-import logo from "./Components/kaiwa-Logo.png"
-import PropTypes from 'prop-types';
+import logo from "./Components/kaiwa-Logo.png";
+import PropTypes from "prop-types";
+
 function App() {
   const [username, setUsername] = useState("");
 
@@ -29,6 +30,7 @@ function App() {
     </ColorProvider>
   );
 }
+
 const MainComponent = ({ username, setUsername }) => {
   const { darkMode } = useContext(ColorContext);
   
@@ -45,13 +47,12 @@ const MainComponent = ({ username, setUsername }) => {
     >
       {/* Überschrift/Login Bereich */}
       <div
-        className={`header-bar mb-3  ${darkMode ? "shadow" : "shadow-sm"}`}
+        className={`header-bar mb-3 ${darkMode ? "shadow" : "shadow-sm"}`}
         style={{
           borderRadius: "5px",
           backgroundColor: darkMode ? "#242424" : "#D9D9D9",
           color: darkMode ? "#ffffff" : "#000000",
           padding: "15px",
-
         }}
       >
         <div className="d-flex align-items-center justify-content-between">
@@ -61,14 +62,13 @@ const MainComponent = ({ username, setUsername }) => {
               src={logo}
               alt="Kaiwa Logo"
               style={{
-                marginLeft:"100px",
-                width:"50px",
+                marginLeft: "100px",
+                width: "50px",
                 textShadow: darkMode
                   ? "2px 2px 4px rgba(255, 255, 255, 0.7)"
                   : "2px 2px 4px rgba(0, 0, 0, 0.5)",
               }}
             />
-
             <p
               style={{
                 textShadow: darkMode
@@ -88,7 +88,7 @@ const MainComponent = ({ username, setUsername }) => {
         </div>
       </div>
 
-      <div className="d-flex flex-grow-1" style={{ gap: "15px", paddingBottom: "15px", paddingTop:""}}>
+      <div className="d-flex flex-grow-1" style={{ gap: "15px", paddingBottom: "15px" }}>
         {/* Sidebar für die Benutzerliste */}
         <div
           className={`chat-history d-flex flex-column align-items-center ${
@@ -110,9 +110,7 @@ const MainComponent = ({ username, setUsername }) => {
 
         {/* Chat-Historie */}
         <div
-          className={` flex-grow-1 ${
-            darkMode ? "shadow" : "shadow-sm"
-          }`}
+          className={`flex-grow-1 ${darkMode ? "shadow" : "shadow-sm"}`}
           style={{
             border: "none",
             borderRadius: "5px",
@@ -121,20 +119,19 @@ const MainComponent = ({ username, setUsername }) => {
             maxHeight: "calc(100vh - 125px)",
             display: "flex",
             flexDirection: "column",
-
           }}
         >
           <ChatHistory username={username} darkMode={darkMode} />
           {/* Texteingabe */}
-          <div className="mt-3 flex-shrink-0" >
+          <div className="mt-3 flex-shrink-0">
             <TextInput username={username} />
-
           </div>
         </div>
       </div>
     </div>
   );
 };
+
 MainComponent.propTypes = {
   username: PropTypes.string.isRequired,
   setUsername: PropTypes.func.isRequired,
