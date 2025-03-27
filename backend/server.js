@@ -41,7 +41,7 @@ io.on("connection", (socket) => {
     console.log(`Nachricht von ${socket.username}:`, messageData);
     try {
       // Add the chat message to the database
-      await addChatMessage(messageData.user, messageData.text, messageData.id, messageData.timestamp);
+      await addChatMessage(messageData.user, messageData.text, messageData.id, messageData.timestamp, messageData.groupname);
       console.log("Message added to database");
       // Broadcast the message to other clients
     } catch (error) {
