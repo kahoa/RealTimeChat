@@ -2,7 +2,7 @@ import express from "express";
 import { createServer } from "node:http";
 import { Server } from "socket.io";
 import cors from "cors";
-import { addChatMessage, getChatMessages, getGroup } from "./database/database.js";
+import { addChatMessage, getChatMessages, addGroup, getGroup } from "./database/database.js";
 
 const app = express();
 const server = createServer(app);
@@ -70,15 +70,26 @@ app.get("/chat/:group_name?", async (req, res) => {
         group_name = "default";
     }
     // Try to retrieve the matching ID for the group
-    const groupID = await getGroup(group_name);
-    console.debug("Group ID:", groupID);
-    if (groupID !== undefined) {
-        // Get messages for this group
-        const chatMessages = await getChatMessages(groupID.id);
-        res.status(200).send(chatMessages);
-    } else {
-        res.status(404).send("Group not found");
-    }
+    let groupID;
+    let triedGroupCreation = false;
+    do {
+        groupID = await getGroup(group_name);
+        if (!groupID) {
+            if (triedGroupCreation) {
+                console.error("Group creation failed");
+                res.status(500).send("Group creation failed");
+                return;
+            }
+            // Group not found, create it
+            await addGroup(group_name);
+            console.log("Group created", group_name);
+            triedGroupCreation = true;
+        }
+    } while (groupID === undefined);
+    
+    // Get messages for this group
+    const chatMessages = await getChatMessages(groupID.id);
+    res.status(200).send(chatMessages);
   } catch (error) {
     console.error("Error fetching chat messages:", error);
     res.status(500).send("Error fetching chat messages");
