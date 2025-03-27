@@ -5,7 +5,7 @@ import { useSocket } from "./SocketContext";
 import "../App.css";
 import CustomButton from "./CustomButton";
 
-function TextInput({ username }) {
+function TextInput({ username, groupname }) {
   const [message, setMessage] = useState("");
   const { darkMode } = useContext(ColorContext);
   const socket = useSocket(); // importieren der Socket-Verbindung
@@ -25,6 +25,7 @@ function TextInput({ username }) {
         user: username,
         text: message,
         timestamp: new Date().toString().slice(0, 21),
+        groupname: groupname
       };
       // senden des Nachrichten-Objekts über das "send_message"-Event
       socket.emit("send_message", messageData);
@@ -72,6 +73,7 @@ function TextInput({ username }) {
 // PropTypes-Validierung hinzufügen
 TextInput.propTypes = {
     username: PropTypes.string.isRequired,
+    groupname: PropTypes.string.isRequired
   };
     
 export default TextInput;
