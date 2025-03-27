@@ -31,11 +31,6 @@ function App() {
 }
 const MainComponent = ({ username, setUsername }) => {
   const { darkMode } = useContext(ColorContext);
-
-MainComponent.propTypes = {
-    username: PropTypes.string.isRequired,
-    setUsername: PropTypes.func.isRequired,
-  };
   
   return (
     <div
@@ -139,6 +134,10 @@ MainComponent.propTypes = {
       </div>
     </div>
   );
+};
+MainComponent.propTypes = {
+  username: PropTypes.string.isRequired,
+  setUsername: PropTypes.func.isRequired,
 };
 
 export default App;
