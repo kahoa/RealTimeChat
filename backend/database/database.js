@@ -65,17 +65,24 @@ function initializeDatabase() {
 const db = initializeDatabase();
 
 // Add a new chat message
-export function addChatMessage(username, text, id, timestamp, group_id = 1) {
+export function addChatMessage(username, text, id, timestamp, groupname = "default") {
     return new Promise((resolve, reject) => {
         if (!username || !text || !id || !timestamp) {
             return reject("One of the fields was empty.");
         }
-        db.run(`INSERT INTO chatmessages (id, text, date, username, group_id) VALUES (?, ?, ?, ?, ?)`, 
-               [id, text, timestamp, username, group_id], (err) => {
+        // Get the group id from the group name out of the database
+        db.get("SELECT id FROM groups WHERE name = ?", [groupname], (err, row) => {
             if (err) {
-                return reject(`Error inserting data: ${err.message}`);
+                return reject(`Error fetching group ID: ${err.message}`);
             }
-            resolve("Data inserted successfully.");
+            const group_id = row ? row.id : 1;
+            db.run(`INSERT INTO chatmessages (id, text, date, username, group_id) VALUES (?, ?, ?, ?, ?)`, 
+               [id, text, timestamp, username, group_id], (err) => {
+                if (err) {
+                    return reject(`Error inserting data: ${err.message}`);
+                }
+                resolve("Data inserted successfully.");
+            });
         });
     });
 }
