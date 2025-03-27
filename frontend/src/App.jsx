@@ -17,6 +17,7 @@ import PropTypes from "prop-types";
 
 function App() {
   const [username, setUsername] = useState("");
+  const [group, setGroup] = useState("default");
 
   return (
     <ColorProvider>
@@ -24,16 +25,16 @@ function App() {
         <Login onLogin={setUsername} />
       ) : (
         <SocketProvider username={username}>
-          <MainComponent username={username} setUsername={setUsername} />
+          <MainComponent username={username} setUsername={setUsername} group={group} setGroup={setGroup} />
         </SocketProvider>
       )}
     </ColorProvider>
   );
 }
 
-const MainComponent = ({ username, setUsername }) => {
+const MainComponent = ({ username, setUsername, group, setGroup }) => {
   const { darkMode } = useContext(ColorContext);
-  
+
   return (
     <div
       className={`container-fluid d-flex flex-column vh-100 ${
@@ -58,7 +59,7 @@ const MainComponent = ({ username, setUsername }) => {
         <div className="d-flex align-items-center justify-content-between">
           <LogOff setUsername={setUsername} />
           <div className="d-flex flex-grow-1 justify-content-center align-items-end">
-          <img
+            <img
               src={logo}
               alt="Kaiwa Logo"
               style={{
@@ -72,8 +73,8 @@ const MainComponent = ({ username, setUsername }) => {
             <p
               style={{
                 textShadow: darkMode
-                ? "2px 2px 4px rgba(255, 255, 255, 0.7)"
-                : "2px 2px 4px rgba(0, 0, 0, 0.5)",
+                  ? "2px 2px 4px rgba(255, 255, 255, 0.7)"
+                  : "2px 2px 4px rgba(0, 0, 0, 0.5)",
                 margin: "0",
                 paddingLeft: "10px",
                 fontFamily: "Inter, sans-serif",
@@ -81,7 +82,7 @@ const MainComponent = ({ username, setUsername }) => {
                 lineHeight: "2.7",
               }}
             >
-              Hallo {username}!
+              Hallo {username}! Du bist in Gruppe {group}!
             </p>
           </div>
           <ColorSwitcher />
@@ -99,12 +100,17 @@ const MainComponent = ({ username, setUsername }) => {
             borderRadius: "5px",
             color: "#565353",
             backgroundColor: darkMode ? "#242424" : "#D9D9D9",
-            maxHeight: "calc(100vh - 75px)", 
-            flex: "0 1 250px", 
+            maxHeight: "calc(100vh - 75px)",
+            flex: "0 1 250px",
           }}
         >
           <div className="d-flex align-items-start justify-content-start">
             <UserDisplay />
+          </div>
+          <div className="d-flex align-items-start justify-content-start">
+            <input id="group" name="group" type="text" placeholder="Gruppenname" />
+            { /* On Submit change group to input */ }
+            <button onClick={() => setGroup(document.getElementById("group").value)}>Beitreten</button>
           </div>
         </div>
 
@@ -121,7 +127,7 @@ const MainComponent = ({ username, setUsername }) => {
             flexDirection: "column",
           }}
         >
-          <ChatHistory username={username} darkMode={darkMode} />
+          <ChatHistory username={username} group={group} darkMode={darkMode} />
           {/* Texteingabe */}
           <div className="mt-3 flex-shrink-0">
             <TextInput username={username} />
@@ -135,6 +141,8 @@ const MainComponent = ({ username, setUsername }) => {
 MainComponent.propTypes = {
   username: PropTypes.string.isRequired,
   setUsername: PropTypes.func.isRequired,
+  group: PropTypes.string.isRequired,
+  setGroup: PropTypes.func.isRequired,
 };
 
 export default App;
