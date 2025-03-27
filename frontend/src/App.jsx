@@ -130,7 +130,7 @@ const MainComponent = ({ username, setUsername, group, setGroup }) => {
           <ChatHistory username={username} group={group} darkMode={darkMode} />
           {/* Texteingabe */}
           <div className="mt-3 flex-shrink-0">
-            <TextInput username={username} />
+            <TextInput username={username} groupname={group} />
           </div>
         </div>
       </div>
