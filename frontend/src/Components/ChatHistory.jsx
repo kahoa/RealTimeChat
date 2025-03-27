@@ -8,7 +8,7 @@ const WS_SERVER = import.meta.env.VITE_WS_SERVER
   ? `http://${import.meta.env.VITE_WS_SERVER}:8080`
   : "http://localhost:8080"; // Default value for local development
 
-function ChatHistory({ username }) {
+function ChatHistory({ username, group }) {
   const { darkMode } = useContext(ColorContext);
   const [messages, setMessages] = useState([]);
   const socket = useSocket(); // importieren der Socket-Verbindung
@@ -18,10 +18,15 @@ function ChatHistory({ username }) {
   useEffect(() => {
     // Fetch messages from database via /chat GET request and add to state
     async function getChatMessages() {
+      if (!group) {
+        console.log("No group selected");
+        return;
+      }
       try {
-        const response = await fetch(`${WS_SERVER}/chat`);
+        const url = group ? `${WS_SERVER}/chat/${group}` : `${WS_SERVER}/chat`;
+        const response = await fetch(url);
         const data = await response.json();
-        console.log(data);
+        console.log("Fetched chat messages:", data);
         // Convert messages into proper format (id, isUser, text, user, timestamp)
         const formattedMessages = data.map((msg) => ({
           id: msg.id,
@@ -37,6 +42,7 @@ function ChatHistory({ username }) {
         console.error("Error fetching messages:", error);
       }
     }
+    
     getChatMessages();
 
     if (socket) {
@@ -52,7 +58,7 @@ function ChatHistory({ username }) {
         socket.off("receive_message");
       }
     };
-  }, [socket, username]);
+   }, [socket, username, group]);
 
   useEffect(() => {
     const lastMessageElement = document.querySelector(".last-message");
@@ -126,6 +132,7 @@ function ChatHistory({ username }) {
 
 ChatHistory.propTypes = {
     username: PropTypes.string.isRequired, // `username` must be a required string
+    group: PropTypes.string, // `group` must be a string
   };
 
 export default ChatHistory;
