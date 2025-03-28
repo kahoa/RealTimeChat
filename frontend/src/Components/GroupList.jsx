@@ -6,7 +6,7 @@ const WS_SERVER = import.meta.env.VITE_WS_SERVER
   ? `http://${import.meta.env.VITE_WS_SERVER}:8080`
   : "http://localhost:8080"; //
 
-function UserList({ darkMode }) { 
+function GroupList({ darkMode }) { 
   const [groups, setGroups] = useState([]);
   const [groupName, setGroupName] = useState("");
   const [selectedGroup, setSelectedGroup] = useState(null); 
@@ -78,4 +78,4 @@ function UserList({ darkMode }) {
   );
 }
 
-export default UserList;
+export default GroupList;
