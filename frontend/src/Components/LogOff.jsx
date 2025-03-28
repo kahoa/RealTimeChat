@@ -12,7 +12,10 @@ function LogOff({ setUsername }) {
       socket.disconnect();
     }
     setUsername("");
-  };
+
+    window.location.href = "/default";  // Neuladen der Seite
+    };
+  
 
   return (
         <CustomButton onClick={handleLogOff}>
