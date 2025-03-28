@@ -97,6 +97,17 @@ app.get("/chat/:group_name?", async (req, res) => {
   }
 });
 
+// get all groups
+app.get("/groups_list", async (req, res) => {
+  try {
+    const groups = await getAllGroups();
+    res.status(200).send(groups);
+  } catch (error) {
+    console.error("Error fetching groups:", error);
+    res.status(500).send("Error fetching groups");
+  }
+});
+
 server.listen(port, "0.0.0.0", () => {
   console.log(`Server läuft auf http://0.0.0.0:${port}`);
 });
