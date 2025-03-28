@@ -112,13 +112,13 @@ const MainComponent = ({ username, setUsername, group, setGroup }) => {
           <div className="d-flex align-items-start justify-content-start w-100" style={{ gap: "10px" }}>
             <input className="input-field" id="group" name="group" type="text" placeholder="Gruppenname"></input>
             { /* On Submit change group to input */ }
-            <CustomButton onClick={() => setGroup(document.getElementById("group").value)}className={`btn btn-custom ${darkMode ? "btn-dark" : "btn-light"}`}
+            <CustomButton onClick={() => setGroup(document.getElementById("group").value)} className={`btn btn-custom ${darkMode ? "btn-dark" : "btn-light"}`}
           style={{ width: "100%", maxWidth: "300px" }}> Join</CustomButton>
           </div>
           {/* Gruppenliste */}
           <div className="d-flex align-items-start justify-content-start w-100">
             <div> 
-                <GroupList/>
+                <GroupList darkMode={darkMode}/>
             </div>
           </div>
 
