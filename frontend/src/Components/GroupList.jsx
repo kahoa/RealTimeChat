@@ -40,6 +40,7 @@ function UserList() {
   
   return (
     <div>
+         <br></br>
          <p>Gruppenliste: {groupName}</p>
       <ul>
         {groups.map((group) => (
