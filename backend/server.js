@@ -2,7 +2,7 @@ import express from "express";
 import { createServer } from "node:http";
 import { Server } from "socket.io";
 import cors from "cors";
-import { addChatMessage, getChatMessages, addGroup, getGroup } from "./database/database.js";
+import { addChatMessage, getChatMessages, addGroup, getGroup,getAllGroups } from "./database/database.js";
 
 const app = express();
 const server = createServer(app);
