@@ -14,6 +14,7 @@ import Login from "./Components/Login";
 import LogOff from "./Components/LogOff";
 import logo from "./Components/kaiwa-Logo.png";
 import PropTypes from "prop-types";
+import GroupList from "./Components/GroupList";
 
 function App() {
   const [username, setUsername] = useState("");
@@ -112,6 +113,13 @@ const MainComponent = ({ username, setUsername, group, setGroup }) => {
             { /* On Submit change group to input */ }
             <button onClick={() => setGroup(document.getElementById("group").value)}>Beitreten</button>
           </div>
+          {/* Gruppenliste */}
+          <div className="d-flex align-items-start justify-content-start">
+            <div>
+                <GroupList />
+            </div>
+          </div>
+
         </div>
 
         {/* Chat-Historie */}
