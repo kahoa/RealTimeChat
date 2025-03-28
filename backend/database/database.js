@@ -135,6 +135,24 @@ export function addGroup(groupName) {
     });
 }
 
+//get all groups
+export function getAllGroups() {
+    try {
+        return new Promise((resolve, reject) => {
+            db.all("SELECT * FROM groups", (err, rows) => {
+                if (err) {
+                    reject(`Error fetching groups: ${err.message}`);
+                } else {
+                    resolve(rows);
+                }
+            });
+        });
+    } catch (error) {
+        console.error("Error fetching groups:", error);
+    }
+    
+    
+}
 // Reset the database contents
 export function resetDatabase() {
     return new Promise((resolve, reject) => {
