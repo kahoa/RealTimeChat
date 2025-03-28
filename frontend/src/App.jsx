@@ -34,8 +34,23 @@ function App() {
   );
 }
 
+const WS_SERVER = import.meta.env.VITE_WS_SERVER
+  ? `http://${import.meta.env.VITE_WS_SERVER}:8080`
+  : "http://localhost:8080"; //
 const MainComponent = ({ username, setUsername, group, setGroup }) => {
   const { darkMode } = useContext(ColorContext);
+
+  const [groups, setGroups] = useState([]);
+  async function fetchGroups() {
+    try {
+      const response = await fetch(`${WS_SERVER}/groups_list`);
+      const data = await response.json();
+      setGroups(data);
+    } catch (error) {
+      console.error("Error fetching groups:", error);
+    }
+  }
+  fetchGroups();
 
   return (
     <div
@@ -112,13 +127,16 @@ const MainComponent = ({ username, setUsername, group, setGroup }) => {
           <div className="d-flex align-items-start justify-content-start w-100" style={{ gap: "10px" }}>
             <input className="input-field" id="group" name="group" type="text" placeholder="Gruppenname"></input>
             { /* On Submit change group to input */ }
-            <CustomButton onClick={() => setGroup(document.getElementById("group").value)} className={`btn btn-custom ${darkMode ? "btn-dark" : "btn-light"}`}
+            <CustomButton onClick={function() {
+                setGroup(document.getElementById("group").value);
+                fetchGroups();
+            } } className={`btn btn-custom ${darkMode ? "btn-dark" : "btn-light"}`}
           style={{ width: "100%", maxWidth: "300px" }}> Join</CustomButton>
           </div>
           {/* Gruppenliste */}
           <div className="d-flex align-items-start justify-content-start w-100">
             <div> 
-                <GroupList darkMode={darkMode}/>
+                <GroupList darkMode={darkMode} groups={groups}/>
             </div>
           </div>
 

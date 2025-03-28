@@ -2,28 +2,12 @@
 import { useState, useEffect } from "react";
 import { useSocket } from "./SocketContext";
 
-const WS_SERVER = import.meta.env.VITE_WS_SERVER
-  ? `http://${import.meta.env.VITE_WS_SERVER}:8080`
-  : "http://localhost:8080"; //
-
-function GroupList({ darkMode }) { 
-  const [groups, setGroups] = useState([]);
+function GroupList({ darkMode, groups }) { 
   const [groupName, setGroupName] = useState("");
   const [selectedGroup, setSelectedGroup] = useState(null); 
   const socket = useSocket(); //
 
   useEffect(() => {
-    async function fetchGroups() {
-      try {
-        const response = await fetch(`${WS_SERVER}/groups_list`);
-        const data = await response.json();
-        setGroups(data);
-      } catch (error) {
-        console.error("Error fetching groups:", error);
-      }
-    }
-    fetchGroups();
-
     // Update the groupName state when the "group_name" event is received
         if (socket) {
           socket.on("group_name", (name) => {
