@@ -30,27 +30,38 @@ io.on("connection", (socket) => {
 
 //
   const activeCheckInterval = setInterval(() => {
-    if (!socket.isActive) {
+    const currentTime = Date.now();
+    users = users.filter((user) => {
+    if (!user.isActive && currentTime - user.lastActive  > 20000)  {
+        console.log(`Benutzer ${user.username} wurde entfernt wegen Inaktivität.`);
+        return false;
+      }
+      return true;
+    });
       // Benutzerliste altualisieren wenn ein Benutzer die Verbindung trennt
-      console.log("Liste aktiver Benutzer vor dem Check:", users);
-      users = users.map((user) =>
-        user.username === socket.username
-          ? { ...user, isActive: false }
-          : user
-      );
-      console.log("Liste aktiver Benutzer nach dem Check:", users);
-      io.emit("update_user", users);
-    }
-  }, 20000); // check every 20 seconds
+      console.log("Liste der aktiven Benutzer nach dem Check:", users);
+      io.emit("update_user", users); 
+    }, 10000); // check every 10 seconds
 
   // Benutzernamen über das "set_username"-Event aus dem Frontend empfangen
   socket.on("set_username", (username) => {
-    socket.username = username;
-    // username zur Benutzerliste hinzufügen
-    users = [...users, { username: username, isActive: true }];
-    console.log(`${username} hat sich angemeldet!`);
-    // Benutzerliste über das "update_user"-Event ins Frontend senden
-    io.emit("update_user", users);
+      console.log("Neuer Nutzer:", username);
+      const existingUser = users.find((user) => user.username === username);
+
+      if (existingUser) {
+          // if the user already exists, set their isActive flag to true
+          existingUser.isActive = true;
+          existingUser.lastActive = Date.now(); // update the lastActive timestamp
+          console.log(`${username} hat sich erneut angemeldet und wurde reaktiviert!`);
+      } else {
+          // if the user doesn't exist, add them to the list
+          socket.username = username;
+          // username zur Benutzerliste hinzufügen
+          users = [...users, { username: username, isActive: true, lastActive: Date.now() }];
+          console.log(`${username} hat sich angemeldet!`);
+          // Benutzerliste über das "update_user"-Event ins Frontend senden
+          io.emit("update_user", users);
+      }
   });
 
   // Daten über das "send_message"-Event aus dem Frontend empfangen
