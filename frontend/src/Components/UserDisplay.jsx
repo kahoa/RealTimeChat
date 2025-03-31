@@ -45,7 +45,7 @@ function UserDisplay() {
               boxShadow: darkMode ? "0px 4px 10px rgba(0, 0, 0, 0.5)" : "0px 4px 10px rgba(0, 0, 0, 0.1)",
             }}
           >
-            <span className="fw-bold">{user}</span>
+            <span className="fw-bold">{user.username}</span>
             <i
               className="fas fa-user-circle"
               style={{
