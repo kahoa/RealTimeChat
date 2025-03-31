@@ -1,6 +1,8 @@
 
 import { useState, useEffect } from "react";
 import { useSocket } from "./SocketContext";
+import PropTypes from 'prop-types';
+
 
 function GroupList({ darkMode, groups }) { 
   const [groupName, setGroupName] = useState("");
@@ -61,5 +63,15 @@ function GroupList({ darkMode, groups }) {
     </div>
   );
 }
+
+GroupList.propTypes = {
+    darkMode: PropTypes.bool.isRequired, // Assuming darkMode is a boolean
+    groups: PropTypes.arrayOf(
+      PropTypes.shape({
+        id: PropTypes.number.isRequired,
+        name: PropTypes.string.isRequired,
+      })
+    ).isRequired, // Assuming groups is an array of objects with id and name
+  };
 
 export default GroupList;
