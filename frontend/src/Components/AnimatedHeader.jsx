@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import logo from "./kaiwa-removebg-preview (3).png";
 
 const AnimatedHeader = () => {

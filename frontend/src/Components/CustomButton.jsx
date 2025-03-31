@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import { useContext, useState } from "react";
 import { ColorContext } from "./ColorSwitcher";
 
 const CustomButton = ({ onClick, children, type = "button" }) => {
