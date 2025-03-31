@@ -47,7 +47,7 @@ function UserDisplay() {
           >
             <span className="fw-bold">{user.username}</span>
             <i
-              className="fas fa-user-circle"
+              className={`fas ${user.isActive ? "fa-user-circle" : "fa-user-slash"}`} 
               style={{
                   width:"80px",
                   textAlign:"right",
