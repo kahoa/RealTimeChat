@@ -26,11 +26,28 @@ let users = [];
 io.on("connection", (socket) => {
   console.log(`User verbunden: ${socket.id}`);
 
+  socket.isActive = true;
+
+//
+  const activeCheckInterval = setInterval(() => {
+    if (!socket.isActive) {
+      // Benutzerliste altualisieren wenn ein Benutzer die Verbindung trennt
+      console.log("Liste aktiver Benutzer vor dem Check:", users);
+      users = users.map((user) =>
+        user.username === socket.username
+          ? { ...user, isActive: false }
+          : user
+      );
+      console.log("Liste aktiver Benutzer nach dem Check:", users);
+      io.emit("update_user", users);
+    }
+  }, 20000); // check every 20 seconds
+
   // Benutzernamen über das "set_username"-Event aus dem Frontend empfangen
   socket.on("set_username", (username) => {
     socket.username = username;
     // username zur Benutzerliste hinzufügen
-    users.push(username);
+    users = [...users, { username: username, isActive: true }];
     console.log(`${username} hat sich angemeldet!`);
     // Benutzerliste über das "update_user"-Event ins Frontend senden
     io.emit("update_user", users);
@@ -52,13 +69,22 @@ io.on("connection", (socket) => {
     io.emit("receive_message", messageData);
   });
 
+  //  setze das "isActive"-Flag auf "true" wenn ein Benutzer die Verbindung herstellt
+  socket.on("heartbeat", () => {
+    socket.isActive = true; 
+  });
+
   // Benutzerliste altualisieren wenn ein Benutzer die Verbindung trennt
   socket.on("disconnect", () => {
-    if (socket.username) {
-      console.log(`${socket.username} hat sich abgemeldet!`);
-      users = users.filter((user) => user !== socket.username);
+    console.log(`${socket.username} hat sich abgemeldet!`);
+    users = users.map((user) =>
+        user.username === socket.username
+          ? { ...user, isActive: false } 
+          : user
+      );
       io.emit("update_user", users);
-    }
+
+    clearInterval(activeCheckInterval); // stop the interval
   });
 });
 
