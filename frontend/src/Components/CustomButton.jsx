@@ -1,5 +1,6 @@
 import { useContext, useState } from "react";
 import { ColorContext } from "./ColorSwitcher";
+import PropTypes from "prop-types";
 
 const CustomButton = ({ onClick, children, type = "button" }) => {
 
@@ -34,5 +35,12 @@ const CustomButton = ({ onClick, children, type = "button" }) => {
     </button>
   );
 };
+
+
+CustomButton.propTypes = {
+    onClick: PropTypes.func.isRequired, // Ensures onClick is a required function
+    children: PropTypes.node.isRequired, // Ensures children is any renderable node
+    type: PropTypes.string.isRequired,   // Ensures type is a required string
+  };
 
 export default CustomButton;
