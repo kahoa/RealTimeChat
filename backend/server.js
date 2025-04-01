@@ -69,7 +69,7 @@ io.on("connection", (socket) => {
         console.log(`Nachricht von ${socket.username}:`, messageData);
         try {
             // Wenn der Benutzer keiner Gruppe zugeordnet ist oder kein groupname angegeben wurde, wird die Nachricht an die Gruppe "default" gesendet
-            const groupName = messageData.groupname || (users.find((user) => user.username === socket.username)?.group || "default")
+            const groupName = messageData.groupname || "default"; 
             console.log(`${socket.username} sendet Nachricht an Gruppe: ${groupName}`);
             // Add the chat message to the database
             const group = await getGroup(groupName);
