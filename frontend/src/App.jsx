@@ -8,7 +8,7 @@ import {
   ColorContext,
 } from "./Components/ColorSwitcher";
 import "./App.css";
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect} from "react";
 import { SocketProvider } from "./Components/SocketProvider";
 import Login from "./Components/Login";
 import LogOff from "./Components/LogOff";
@@ -50,7 +50,9 @@ const MainComponent = ({ username, setUsername, group, setGroup }) => {
       console.error("Error fetching groups:", error);
     }
   }
-  fetchGroups();
+  useEffect(() => {
+    fetchGroups();
+  }, []);
 
   return (
     <div
