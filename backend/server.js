@@ -32,11 +32,11 @@ io.on("connection", (socket) => {
   const activeCheckInterval = setInterval(() => {
     const currentTime = Date.now();
     users = users.filter((user) => {
-    if (!user.isActive && currentTime - user.lastActive  > 20000)  {
-        console.log(`Benutzer ${user.username} wurde als inaktiv markiert.`);
-        return { ...user, isActive: false }; // mark user as inactive
-      }
-      return true;
+        if (!user.isActive && currentTime - user.lastActive  > 20000)  {
+            console.log(`Benutzer ${user.username} wurde als inaktiv markiert.`);
+            return { ...user, isActive: false }; // mark user as inactive
+          }
+      return users;
     });
       // Benutzerliste altualisieren wenn ein Benutzer die Verbindung trennt
       console.log("Liste der aktiven Benutzer nach dem Check:", users);
