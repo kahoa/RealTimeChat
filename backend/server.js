@@ -78,8 +78,6 @@ io.on("connection", (socket) => {
                 return;
             }
 
-            // Add the chat message to the database
-            const group = await getGroup(messageData.groupname);
             await addChatMessage(messageData.user, messageData.text, messageData.id, messageData.timestamp, group.id);
             console.log("Message added to database");
             // Broadcast the message to other clients
