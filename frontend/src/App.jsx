@@ -126,7 +126,7 @@ const MainComponent = ({ username, setUsername, group, setGroup }) => {
           <div className="d-flex align-items-start justify-content-start">
             <UserDisplay />
           </div>
-          <div className="d-flex align-items-start justify-content-start w-100" style={{ gap: "10px" }}>
+          <div className="d-flex align-items-center px-2 justify-content-start w-100" style={{ gap: "10px" }}>
             <input className="input-field" id="group" name="group" type="text" placeholder="Gruppenname"></input>
             { /* On Submit change group to input */ }
             <CustomButton onClick={function() {
