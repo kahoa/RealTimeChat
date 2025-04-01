@@ -65,20 +65,30 @@ io.on("connection", (socket) => {
   });
 
   // Daten über das "send_message"-Event aus dem Frontend empfangen
-  socket.on("send_message", async(messageData) => {
-    console.log(`Nachricht von ${socket.username}:`, messageData);
-    try {
-      // Add the chat message to the database
-      const group = await getGroup(messageData.groupname);
-      await addChatMessage(messageData.user, messageData.text, messageData.id, messageData.timestamp, group.id);
-      console.log("Message added to database");
-      // Broadcast the message to other clients
-    } catch (error) {
-      console.error("Error processing message:", error);
-    }
-    // Daten über das "receive_message"-Event ins Frontend senden
-    io.emit("receive_message", messageData);
-  });
+    socket.on("send_message", async (messageData) => {
+        console.log(`Nachricht von ${socket.username}:`, messageData);
+        try {
+            // Wenn der Benutzer keiner Gruppe zugeordnet ist oder kein groupname angegeben wurde, wird die Nachricht an die Gruppe "default" gesendet
+            const groupName = messageData.groupname || (users.find((user) => user.username === socket.username)?.group || "default")
+            console.log(`${socket.username} sendet Nachricht an Gruppe: ${groupName}`);
+            // Add the chat message to the database
+            const group = await getGroup(groupName);
+            if (!group) {
+                console.error(`Gruppe ${groupName} nicht gefunden `);
+                return;
+            }
+
+            // Add the chat message to the database
+            const group = await getGroup(messageData.groupname);
+            await addChatMessage(messageData.user, messageData.text, messageData.id, messageData.timestamp, group.id);
+            console.log("Message added to database");
+            // Broadcast the message to other clients
+        } catch (error) {
+            console.error("Error processing message:", error);
+        }
+        // Daten über das "receive_message"-Event ins Frontend senden
+        io.emit("receive_message", messageData);
+    });
 
   //  setze das "isActive"-Flag auf "true" wenn ein Benutzer die Verbindung herstellt
   socket.on("heartbeat", () => {
