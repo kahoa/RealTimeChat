@@ -33,8 +33,8 @@ io.on("connection", (socket) => {
     const currentTime = Date.now();
     users = users.filter((user) => {
     if (!user.isActive && currentTime - user.lastActive  > 20000)  {
-        console.log(`Benutzer ${user.username} wurde entfernt wegen Inaktivität.`);
-        return false;
+        console.log(`Benutzer ${user.username} wurde als inaktiv markiert.`);
+        return { ...user, isActive: false }; // mark user as inactive
       }
       return true;
     });
