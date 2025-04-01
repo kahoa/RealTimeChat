@@ -45,13 +45,15 @@ function ChatHistory({ username, group }) {
     
     getChatMessages();
 
-    if (socket) {
-      // Nachrichten-Objekt über das "receive_message"-Event aus dem Backend empfangen
-      socket.on("receive_message", (message) => {
-        // Nachrichten-Objekte speichern
-        setMessages((prevMessages) => [...prevMessages, message]);
-      });
-    }
+      if (socket) {
+        // Nachrichten-Objekt über das "receive_message"-Event aus dem Backend empfangen
+        socket.on("receive_message", (message) => {
+          if (message.groupname === group){
+              setMessages((prevMessages) => [...prevMessages, message]);
+            } 
+        });
+      }
+
     return () => {
       if (socket) {
         // "receive_message"-Event beenden
