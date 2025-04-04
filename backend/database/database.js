@@ -21,7 +21,7 @@ function initializeDatabase() {
                     db.run(`CREATE TABLE IF NOT EXISTS chatmessages (
                         id INTEGER PRIMARY KEY AUTOINCREMENT,
                         text TEXT,
-                        date TEXT,
+                        date INTEGER,
                         username TEXT,
                         group_id INTEGER DEFAULT 1 REFERENCES groups(id)
                     )`, (err) => {
@@ -70,6 +70,7 @@ export function addChatMessage(username, text, id, timestamp, group_id = 1) {
         if (!username || !text || !id || !timestamp) {
             return reject("One of the fields was empty.");
         }
+        console.log(timestamp);
         db.run(`INSERT INTO chatmessages (id, text, date, username, group_id) VALUES (?, ?, ?, ?, ?)`, 
             [id, text, timestamp, username, group_id], (err) => {
             if (err) {

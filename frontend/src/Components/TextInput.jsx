@@ -24,7 +24,7 @@ function TextInput({ username, groupname }) {
         id: Date.now(),
         user: username,
         text: message,
-        timestamp: new Date().toString().slice(0, 21),
+        timestamp: Date.now(),
         groupname: groupname
       };
       // senden des Nachrichten-Objekts über das "send_message"-Event

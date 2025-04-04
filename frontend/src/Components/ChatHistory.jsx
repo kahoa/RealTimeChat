@@ -119,7 +119,7 @@ function ChatHistory({ username, group }) {
               }}
             >
               {msg.user}
-              <span style={{ fontSize: "8px"}}> {msg.timestamp}</span>
+              <span style={{ fontSize: "8px"}}> {new Date(msg.timestamp).toLocaleString()}</span>
             </p>
           </div>
         </div>
