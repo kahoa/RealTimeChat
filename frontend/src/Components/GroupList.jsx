@@ -12,19 +12,9 @@ function GroupList({ darkMode, groups, setGroups }) {
   useEffect(() => {
       // Update the groupName state when the "group_name" event is received
       if (socket) {
-          socket.on("group_name", (name) => {
-              console.log("Received updated group name:", name);
-              setGroupName(name);
-          });
           socket.on("update_group", setGroups);
       }
-
-      return () => {
-          if (socket) {
-              socket.off("group_name");
-          }
-      };
-  }, [socket]);
+  });
   
   return (
     <div
