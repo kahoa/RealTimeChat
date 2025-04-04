@@ -19,7 +19,7 @@ function ChatHistory({ username, group }) {
     // Fetch messages from database via /chat GET request and add to state
     async function getChatMessages() {
       try {
-        const url = group ? `${WS_SERVER}/chat/${username}/${group}` : `${WS_SERVER}/${username}/chat`;
+        const url = `${WS_SERVER}/chat/${group}/${username}`;
         const response = await fetch(url);
         const data = await response.json();
         console.log("Fetched chat messages:", data);

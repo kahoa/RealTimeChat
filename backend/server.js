@@ -107,7 +107,7 @@ io.on("connection", (socket) => {
 });
 
 // Get chat messages from the database
-app.get("/chat/:username/:group_name?", async (req, res) => {
+app.get("/chat/:group_name/:username", async (req, res) => {
   try {
     let { group_name, username } = req.params;
     // Try to retrieve the matching ID for the group
@@ -129,15 +129,18 @@ app.get("/chat/:username/:group_name?", async (req, res) => {
             triedGroupCreation = true;
         }
     } while (groupID === undefined);
-    
+
     // Get messages for this group
+    const chatMessages = await getChatMessages(groupID.id);
+    
+    // Update group for user
     users = users.map((user) =>
         user.username === username
           ? { ...user, group: group_name } 
           : user
       );
     io.emit("update_user", users); 
-    const chatMessages = await getChatMessages(groupID.id);
+    
     res.status(200).send(chatMessages);
   } catch (error) {
     console.error("Error fetching chat messages:", error);
