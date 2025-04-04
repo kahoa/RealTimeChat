@@ -138,7 +138,7 @@ const MainComponent = ({ username, setUsername, group, setGroup }) => {
           {/* Gruppenliste */}
           <div className="d-flex align-items-start justify-content-start w-100">
             <div> 
-                <GroupList darkMode={darkMode} groups={groups}/>
+                <GroupList darkMode={darkMode} groups={groups} setGroups={setGroups}/>
             </div>
           </div>
 

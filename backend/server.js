@@ -129,6 +129,8 @@ app.get("/chat/:group_name?", async (req, res) => {
             // Group not found, create it
             await addGroup(group_name);
             console.log("Group created", group_name);
+            const groups = await getAllGroups();
+            io.emit("update_group", groups);
             triedGroupCreation = true;
         }
     } while (groupID === undefined);

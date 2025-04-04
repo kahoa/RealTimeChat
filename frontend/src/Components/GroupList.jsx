@@ -4,7 +4,7 @@ import { useSocket } from "./SocketContext";
 import PropTypes from 'prop-types';
 
 
-function GroupList({ darkMode, groups }) { 
+function GroupList({ darkMode, groups, setGroups }) { 
   const [groupName, setGroupName] = useState("");
   const [selectedGroup, setSelectedGroup] = useState(null); 
   const socket = useSocket(); //
@@ -16,6 +16,7 @@ function GroupList({ darkMode, groups }) {
               console.log("Received updated group name:", name);
               setGroupName(name);
           });
+          socket.on("update_group", setGroups);
       }
 
       return () => {
@@ -72,6 +73,7 @@ GroupList.propTypes = {
         name: PropTypes.string.isRequired,
       })
     ).isRequired, // Assuming groups is an array of objects with id and name
+    setGroups: PropTypes.func.isRequired,
   };
 
 export default GroupList;
