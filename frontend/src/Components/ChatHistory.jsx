@@ -18,10 +18,6 @@ function ChatHistory({ username, group }) {
   useEffect(() => {
     // Fetch messages from database via /chat GET request and add to state
     async function getChatMessages() {
-      if (!group) {
-        console.log("No group selected");
-        return;
-      }
       try {
         const url = group ? `${WS_SERVER}/chat/${username}/${group}` : `${WS_SERVER}/${username}/chat`;
         const response = await fetch(url);
