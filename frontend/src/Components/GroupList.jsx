@@ -4,8 +4,7 @@ import { useSocket } from "./SocketContext";
 import PropTypes from 'prop-types';
 
 
-function GroupList({ darkMode, groups, setGroups }) { 
-  const [groupName, setGroupName] = useState("");
+function GroupList({ darkMode, groups, setGroups }) {
   const [selectedGroup, setSelectedGroup] = useState(null); 
   const socket = useSocket(); //
 
@@ -26,7 +25,7 @@ function GroupList({ darkMode, groups, setGroups }) {
     >
       <br />
       <p style={{ fontFamily: "Inter, sans-serif" }}>
-        Gruppenliste: {groupName}
+        Gruppenliste:
       </p>
       <ul>
         {groups.map((group) => (
