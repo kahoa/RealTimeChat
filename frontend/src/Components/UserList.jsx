@@ -11,9 +11,7 @@ function UserDisplay() {
   // und bei jedem An- und Abmelden aktualisieren
   useEffect(() => {
     if (socket) {
-      socket.on("update_user", (users) => {
-        setUsers(users);
-      });
+      socket.on("update_user", setUsers);
     }
   }, [socket]);
 
