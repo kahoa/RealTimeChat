@@ -23,7 +23,7 @@ function ChatHistory({ username, group }) {
         return;
       }
       try {
-        const url = group ? `${WS_SERVER}/chat/${group}` : `${WS_SERVER}/chat`;
+        const url = group ? `${WS_SERVER}/chat/${username}/${group}` : `${WS_SERVER}/${username}/chat`;
         const response = await fetch(url);
         const data = await response.json();
         console.log("Fetched chat messages:", data);

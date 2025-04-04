@@ -43,7 +43,7 @@ function UserDisplay() {
               boxShadow: darkMode ? "0px 4px 10px rgba(0, 0, 0, 0.5)" : "0px 4px 10px rgba(0, 0, 0, 0.1)",
             }}
           >
-            <span className="fw-bold">{user.username}</span>
+            <span className="fw-bold">{user.username} ({user.group ? user.group : "offline"})</span>
             <i
               className={`fas ${user.isActive ? "fa-user-circle" : "fa-user-slash"}`} 
               style={{

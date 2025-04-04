@@ -97,7 +97,7 @@ io.on("connection", (socket) => {
     console.log(`${socket.username} hat sich abgemeldet!`);
     users = users.map((user) =>
         user.username === socket.username
-          ? { ...user, isActive: false } 
+          ? { ...user, isActive: false, group: undefined } 
           : user
       );
       io.emit("update_user", users);
@@ -107,9 +107,9 @@ io.on("connection", (socket) => {
 });
 
 // Get chat messages from the database
-app.get("/chat/:group_name?", async (req, res) => {
+app.get("/chat/:username/:group_name?", async (req, res) => {
   try {
-    let { group_name } = req.params;
+    let { group_name, username } = req.params;
     // Try to retrieve the matching ID for the group
     let groupID;
     let triedGroupCreation = false;
@@ -131,6 +131,12 @@ app.get("/chat/:group_name?", async (req, res) => {
     } while (groupID === undefined);
     
     // Get messages for this group
+    users = users.map((user) =>
+        user.username === username
+          ? { ...user, group: group_name } 
+          : user
+      );
+    io.emit("update_user", users); 
     const chatMessages = await getChatMessages(groupID.id);
     res.status(200).send(chatMessages);
   } catch (error) {
