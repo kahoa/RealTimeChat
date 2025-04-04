@@ -1,6 +1,6 @@
 import ChatHistory from "./Components/ChatHistory";
 import TextInput from "./Components/TextInput";
-import UserDisplay from "./Components/UserDisplay";
+import UserList from "./Components/UserList";
 import "bootstrap/dist/css/bootstrap.min.css";
 import {
   ColorSwitcher,
@@ -124,7 +124,7 @@ const MainComponent = ({ username, setUsername, group, setGroup }) => {
           }}
         >
           <div className="d-flex align-items-start justify-content-start">
-            <UserDisplay />
+            <UserList />
           </div>
           <div className="d-flex align-items-center px-2 justify-content-start w-100" style={{ gap: "10px" }}>
             <input className="input-field" id="group" name="group" type="text" placeholder="Gruppenname"></input>
