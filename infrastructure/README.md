@@ -11,3 +11,5 @@ terraform apply -auto-approve
 cd ../Ansible
 ansible-playbook -i inventory.ini playbook.yml
 ```
+
+[![RealTimeChat Deployment](https://img.youtube.com/vi/_ZwR-pFpX_8/0.jpg)](https://www.youtube.com/watch?v=_ZwR-pFpX_8)
