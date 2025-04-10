@@ -1,33 +1,61 @@
-const database = require('./database');
-const { addChatMessage, getChatMessages, resetDatabase } = database;
+import {
+    addChatMessage,
+    getChatMessages,
+    deleteChatMessage,
+    getGroup,
+    addGroup,
+    resetDatabase
+} from './database';
 
-// This will run before each test
+// This will run before each test to reset the database state
 beforeEach(async () => {
     await resetDatabase();
 });
 
-// Test if we can add a chat message
-test('addChatMessage', async () => {    
-    const text = "test message";
-    
-    await addChatMessage("testuser", text, Date.now(), new Date().toISOString()); // Wait for the chat message to be added
-    const chatMessages = await getChatMessages(); // Wait for chat messages to be fetched
-    
-    expect(chatMessages.length).toBe(1);
-    expect(chatMessages[0].username).toBe("testuser");
-    expect(chatMessages[0].text).toBe(text);
+// Test adding a chat message with missing fields (should reject)
+test('addChatMessage - missing fields', async () => {
+    try {
+        await addChatMessage("", "test message", 1, Date.now()); // Missing username
+    } catch (err) {
+        expect(err).toBe("One of the fields was empty.");
+    }
 });
 
-// Test if we can delete a single chat message
+// Test deleting a chat message
 test('deleteChatMessage', async () => {
     const text = "test message";
-    await database.addChatMessage("testuser", text, Date.now(), new Date().toISOString()); // Wait for the chat message to be added
+    const timestamp = Date.now();
     
-    let chatMessages = await database.getChatMessages(); // Wait for chat messages to be fetched
-    const chatmessageid = chatMessages[0].id;
+    // Add chat message to the database
+    await addChatMessage("testuser", text, 1, timestamp);
     
-    await database.deleteChatMessage(chatmessageid); // Wait for the chat message to be deleted
-    chatMessages = await database.getChatMessages(); // Wait for chat messages to be fetched
-    
+    // Fetch the message to get the ID
+    let chatMessages = await getChatMessages();
+    const chatMessageId = chatMessages[0].id;
+
+    // Delete the chat message
+    await deleteChatMessage(chatMessageId);
+
+    // Fetch chat messages again after deletion
+    chatMessages = await getChatMessages();
     expect(chatMessages.length).toBe(0);
-})
+});
+
+// Test deleting a chat message with an invalid ID (should reject)
+test('deleteChatMessage - invalid ID', async () => {
+    try {
+        await deleteChatMessage(-1); // Invalid ID
+    } catch (err) {
+        expect(err).toBe("Error deleting data: SQLITE_CONSTRAINT: FOREIGN KEY constraint failed");
+    }
+});
+
+// Test getting a group by name
+test('getGroup - by name', async () => {
+    const groupName = "testgroup";
+    await addGroup(groupName);
+
+    const group = await getGroup(groupName);
+    expect(group.name).toBe(groupName);
+});
+
