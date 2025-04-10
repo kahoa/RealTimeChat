@@ -7,7 +7,7 @@
 
 ## 📌 Über das Projekt
 
-[![RealTimeChat Gruppenchat Demo](https://img.youtube.com/vi/00n8HUajaJo/0.jpg)](https://www.youtube.com/watch?v=00n8HUajaJo)
+[![RealTimeChat Gruppenchat Demo](https://img.youtube.com/vi/00n8HUajaJo/maxresdefault.jpg)](https://www.youtube.com/watch?v=00n8HUajaJo)
 
 **Kaiwa** ist eine Echtzeit-Chat-App, die es Nutzern ermöglicht, Nachrichten in Echtzeit zu senden und zu empfangen. Die Anwendung wurde als Gemeinschaftsprojekt im Rahmen unseres Praxis-Projekts entwickelt (*14.10.-28.10.2024*) während unserer Weiterbildung zum **Dev/Ops- und Cloud-Engineer**. Das Projekt wurde anschließend in Einzelarbeit von Kaho Aoyama zwischen dem 07.03.2025-05.04.2025 als Abschlussprojekt um ein automatisches Deployment mittels Terraform und Ansible, Github Actions zum Automatischen Linten des Codes und eine Gruppenchatfunktion erweitert.
 
