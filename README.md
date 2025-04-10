@@ -81,7 +81,7 @@ Für AWS geschieht die Installation automatisiert mittels Terraform und Ansible.
 
 ---
 
-##  Demo
+## 📸 Demo
 
 Das nachfolgende Video zeigt eine Demonstration der Anwendung.
 
@@ -94,6 +94,8 @@ Das nachfolgende Video zeigt eine Demonstration der Anwendung.
 - **Erweiterung der Benutzerprofile** 🏷️
 - **Push-Benachrichtigungen für neue Nachrichten** 🔔
 - **Mobile App-Version mit React Native** 📱
+- **Fotos oder Dateien an den Chat schicken** 📸
+- **Gruppen mit Passwortschutz versehen** 🔒
 
 ---
 
