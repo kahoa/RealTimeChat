@@ -81,11 +81,11 @@ Für AWS geschieht die Installation automatisiert mittels Terraform und Ansible.
 
 ---
 
-## 📸 Screenshots / GIFs
+##  Demo
 
-Füge hier Bilder oder GIFs deiner Anwendung ein, um sie visuell zu präsentieren.
+Das nachfolgende Video zeigt eine Demonstration der Anwendung.
 
-![Kaiwa Screenshot](https://img.youtube.com/vi/00n8HUajaJo/0.jpg)  
+![Kaiwa Screenshot](https://img.youtube.com/vi/00n8HUajaJo/0.jpg)
 
 ---
 
